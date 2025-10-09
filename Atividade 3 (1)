@@ -1,0 +1,36 @@
+using System;
+
+class contadorpersonalizado
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Digite o número inicial: ");
+        int inicio = int.Parse(Console.ReadLine());
+
+        Console.Write("Digite o número final: ");
+        int fim = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("\nNúmeros pares entre os dois valores:");
+
+        if (inicio <= fim)
+        {
+            for (int i = inicio; i <= fim; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    Console.WriteLine(i);
+                }
+            }
+        }
+        else
+        {
+            for (int i = inicio; i >= fim; i--)
+            {
+                if (i % 2 == 0)
+                {
+                    Console.WriteLine(i);
+                }
+            }
+        }
+    }
+}
