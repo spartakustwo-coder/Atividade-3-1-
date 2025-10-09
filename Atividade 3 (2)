@@ -1,0 +1,118 @@
+using System;
+using System.Globalization;
+using System.Formats;
+
+internal class Program
+{
+    [STAThread]
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Data e hora atuais: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+        Console.WriteLine("Bem-vindo à Calculadora Simples!");
+
+        int totalOperacoes = 0;
+        int totalErros = 0;
+        string continuar = "sim";
+
+        while (continuar.ToLower() == "sim")
+        {
+            Console.WriteLine("\nEscolha a sua operação:");
+            Console.WriteLine("1 - Adição");
+            Console.WriteLine("2 - Subtração");
+            Console.WriteLine("3 - Multiplicação");
+            Console.WriteLine("4 - Divisão");
+            Console.WriteLine("5 - Módulo");
+            Console.WriteLine("6 - Sair");
+
+            Console.Write("Digite a opção desejada: ");
+            string opcaoStr = Console.ReadLine();
+            int operacao;
+
+            if (!int.TryParse(opcaoStr, out operacao) || operacao < 1 || operacao > 6)
+            {
+                Console.WriteLine("Opção inválida!");
+                totalErros++;
+                continue;
+            }
+
+            if (operacao == 6)
+                break;
+
+            Console.Write("Digite o primeiro número: ");
+            string num1Str = Console.ReadLine();
+            Console.Write("Digite o segundo número: ");
+            string num2Str = Console.ReadLine();
+
+            double num1, num2;
+
+            if (!double.TryParse(num1Str, NumberStyles.Any, CultureInfo.InvariantCulture, out num1) ||
+                !double.TryParse(num2Str, NumberStyles.Any, CultureInfo.InvariantCulture, out num2))
+            {
+                Console.WriteLine("Entrada numérica inválida!");
+                totalErros++;
+                continue;
+            }
+
+            double resultado = 0;
+            bool operacaoValida = true;
+
+            switch (operacao)
+            {
+                case 1:
+                    resultado = Adicao(num1, num2);
+                    break;
+                case 2:
+                    resultado = Subtracao(num1, num2);
+                    break;
+                case 3:
+                    resultado = Multiplicacao(num1, num2);
+                    break;
+                case 4:
+                    if (num2 == 0)
+                    {
+                        Console.WriteLine("Operação não permitida com divisor zero!");
+                        totalErros++;
+                        operacaoValida = false;
+                    }
+                    else
+                    {
+                        resultado = Divisao(num1, num2);
+                    }
+                    break;
+                case 5:
+                    if (num2 == 0)
+                    {
+                        Console.WriteLine("Operação não permitida com divisor zero!");
+                        totalErros++;
+                        operacaoValida = false;
+                    }
+                    else
+                    {
+                        resultado = Modulo(num1, num2);
+                    }
+                    break;
+            }
+
+            if (operacaoValida)
+            {
+                Console.WriteLine($"Resultado: {resultado:F2}");
+                totalOperacoes++;
+            }
+
+            Console.Write("\nDeseja continuar calculando? (sim/não): ");
+            continuar = Console.ReadLine();
+        }
+
+        string resumo = $"Total de operações realizadas: {totalOperacoes}\n" +
+                        $"Total de erros encontrados: {totalErros}\n\n" +
+                        "Obrigado por usar a Calculadora!";
+
+        //MessageBox.Show(resumo, "Resumo da Calculadora");
+    }
+
+    public static double Adicao(double num1, double num2) => num1 + num2;
+    public static double Subtracao(double num1, double num2) => num1 - num2;
+    public static double Multiplicacao(double num1, double num2) => num1 * num2;
+    public static double Divisao(double num1, double num2) => num1 / num2;
+    public static double Modulo(double num1, double num2) => num1 % num2;
+}
