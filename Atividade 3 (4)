@@ -1,0 +1,58 @@
+using System;
+
+class Funcoesdiaadia
+{
+// Codigo mais simples possivel kkkk estou a tentar
+    static void Main()
+    {
+        ExibirMenu();
+
+        Console.Write("Digite seu nome: ");
+        string nome = Console.ReadLine();
+        Saudacao(nome);
+
+        Console.Write("Digite o primeiro número: ");
+        int num1 = int.Parse(Console.ReadLine());
+
+        Console.Write("Digite o segundo número: ");
+        int num2 = int.Parse(Console.ReadLine());
+
+        int resultado = Somar(num1, num2);
+        Console.WriteLine("A soma dos números é: " + resultado);
+
+        Console.Write("Digite um número para verificar se é par ou ímpar: ");
+        int numero = int.Parse(Console.ReadLine());
+        VerificarParOuImpar(numero);
+    }
+
+    static void ExibirMenu()
+    {
+        Console.WriteLine("=== MENU DE OPÇÕES ===");
+        Console.WriteLine("1 - Saudação personalizada");
+        Console.WriteLine("2 - Soma de dois números");
+        Console.WriteLine("3 - Verificar par ou ímpar");
+        Console.WriteLine("=======================");
+    }
+
+    static void Saudacao(string nome)
+    {
+        Console.WriteLine("Olá, " + nome + "! Seja bem-vindo.");
+    }
+
+    static int Somar(int a, int b)
+    {
+        return a + b;
+    }
+
+    static void VerificarParOuImpar(int n)
+    {
+        if (n % 2 == 0)
+        {
+            Console.WriteLine(n + " é par.");
+        }
+        else
+        {
+            Console.WriteLine(n + " é ímpar.");
+        }
+    }
+}
