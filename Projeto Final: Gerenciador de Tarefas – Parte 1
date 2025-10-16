@@ -1,0 +1,126 @@
+using System;
+using System.Collections.Generic;
+
+class GerenciadorDeTarefas
+{
+    static List<string> tarefas = new List<string>();
+
+    static void Main(string[] args)
+    {
+        bool executando = true;
+
+        while (executando)
+        {
+            MostrarMenu();
+
+            string escolha = Console.ReadLine();
+
+            switch (escolha)
+            {
+                case "1":
+                    AdicionarTarefa();
+                    break;
+                case "2":
+                    ListarTarefas();
+                    break;
+                case "3":
+                    RemoverTarefa();
+                    break;
+                case "4":
+                    executando = false;
+                    Console.WriteLine("Encerrando o programa.");
+                    break;
+                default:
+                    Console.WriteLine("Opção inválida. use a tecla enter para continuar.");
+                    Console.ReadLine();
+                    break;
+            }
+        }
+    }
+
+    static void MostrarMenu()
+    {
+        Console.Clear();
+        Console.WriteLine("===== GERENCIADOR DE TAREFAS =====");
+        Console.WriteLine($"Tarefas cadastradas: {tarefas.Count}");
+        Console.WriteLine("1 - Adicionar tarefa");
+        Console.WriteLine("2 - Listar tarefas");
+        Console.WriteLine("3 - Remover tarefa");
+        Console.WriteLine("4 - Sair");
+        Console.Write("Escolha uma opção: ");
+    }
+
+    static void AdicionarTarefa()
+    {
+        Console.Write("Digite o nome da nova tarefa: ");
+        string tarefa = Console.ReadLine().Trim();
+
+        if (string.IsNullOrEmpty(tarefa))
+        {
+            Console.WriteLine("Tarefa inválida use a tecla enter para continuar.");
+            Console.ReadLine();
+            return;
+        }
+
+        if (tarefas.Contains(tarefa))
+        {
+            Console.WriteLine("Essa tarefa já existe use a tecla enter para continuar.");
+            Console.ReadLine();
+            return;
+        }
+
+        tarefas.Add(tarefa);
+        Console.WriteLine("Tarefa adicionada com sucesso use a tecla enter para continuar.");
+        Console.ReadLine();
+    }
+
+    static void ListarTarefas()
+    {
+        Console.WriteLine("\n LISTA DE TAREFAS ");
+
+        if (tarefas.Count == 0)
+        {
+            Console.WriteLine("Nenhuma tarefa cadastrada");
+        }
+        else
+        {
+            int contador = 1;
+            foreach (string tarefa in tarefas)
+            {
+                Console.WriteLine($"{contador} - {tarefa}");
+                contador++;
+            }
+        }
+
+        Console.WriteLine("Pressione Enter para continuar.");
+        Console.ReadLine();
+    }
+
+    static void RemoverTarefa()
+    {
+        if (tarefas.Count == 0)
+        {
+            Console.WriteLine("Nenhuma tarefa para remover use a tecla enter para continuar.");
+            Console.ReadLine();
+            return;
+        }
+
+        ListarTarefas();
+
+        Console.Write("Digite o número da tarefa que deseja remover: ");
+        string entrada = Console.ReadLine();
+        int indice;
+
+        if (!int.TryParse(entrada, out indice) || indice < 1 || indice > tarefas.Count)
+        {
+            Console.WriteLine("Número inválido use a tecla enter para continuar.");
+            Console.ReadLine();
+            return;
+        }
+
+        string tarefaRemovida = tarefas[indice - 1];
+        tarefas.RemoveAt(indice - 1);
+        Console.WriteLine($"Tarefa \"{tarefaRemovida}\" removida com sucesso use a tecla enter para continuar.");
+        Console.ReadLine();
+    }
+}
